@@ -1,5 +1,6 @@
 class Calculator {
     constructor(previousOperandTextElement, currentOperandTextElement) {
+        this.currentOperand = '';
         this.previousOperandTextElement = previousOperandTextElement
         this.currentOperandTextElement = currentOperandTextElement
     }
@@ -30,27 +31,25 @@ class Calculator {
     }
 
     compute() {
-        let computation 
         const prev = parseFloat(this.previousOperand)
         const current = parseFloat(this.currentOperand)
         if (isNaN(prev) || isNaN(current)) return
         switch (this.operation) {
             case '+':
-                computation = prev + current
+                this.currentOperand = prev + current
                 break
             case '-':
-                computation = prev - current
+                this.currentOperand = prev - current
                 break
             case '*':
-                computation = prev * current
+                this.currentOperand = prev * current
                 break
             case '÷':
-                computation = prev / current
+                this.currentOperand = prev / current
                 break
             default:
                 return 
         }
-        this.currentOperand = computation
         this.operation = undefined
         this.previousOperand = ''
     }
@@ -74,7 +73,7 @@ class Calculator {
 }
 
     updateDisplay() {
-        this.currentOperandTextElement.innerText = this.currentOperand
+        this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand)
         if (this.operation != null) {
             this.previousOperandTextElement.innerText = `${this.previousOperand} ${this.operation}`
         } else {
